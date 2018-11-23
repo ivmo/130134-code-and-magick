@@ -10,6 +10,7 @@ var BAR_WIDTH = 40;
 var BAR_GAP = 50;
 var barHeigth = 150;
 
+
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
@@ -24,21 +25,24 @@ var renderTitle = function (ctx, x, y, color) {
   ctx.fillText('Список результатов:', x, y + FONT_GAP);
 };
 
+
 var getMaxElement = function (arr) {
-  if (arr.length > 0) {
-    var maxElement = arr[0];
 
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] > maxElement) {
-        maxElement = arr[i];
-      }
+  return arr.reduce(function (maxElement, currElement) {
+    if (currElement > maxElement) {
+      maxElement = currElement;
     }
-  } else {
-    maxElement = 0;
-  }
+    return maxElement;
+  });
 
-  return maxElement;
 };
+
+var renderChart = function (ctx, x, y, timesCurr, maxTime, playersCurr) {
+  ctx.fillRect(x, y, BAR_WIDTH, (-barHeigth * timesCurr) / maxTime);
+  ctx.fillStyle = '#000';
+  ctx.fillText(playersCurr, x + BAR_WIDTH / 2, y);
+};
+
 
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
@@ -48,14 +52,12 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
-    if (players[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      var opacity = Math.random() * (1 - 0.1) + 0.1;
-      ctx.fillStyle = 'rgba(10, 135, 255, ' + opacity + ')';
-    }
-    ctx.fillRect(CLOUD_X + GAP + GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth, BAR_WIDTH, (-barHeigth * times[i]) / maxTime);
-    ctx.fillStyle = '#000';
-    ctx.fillText(players[i], CLOUD_X + GAP * 2 + BAR_WIDTH / 2 + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + FONT_GAP * 2 + GAP * 3 + barHeigth);
+
+    var opacity = Math.random() * (1 - 0.1) + 0.1;
+    ctx.fillStyle = players[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(10, 135, 255, ' + opacity + ')';
+
+    var barX = CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_GAP) * i;
+    var barY = CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth;
+    renderChart(ctx, barX, barY, times[i], maxTime, players[i]);
   }
 };
