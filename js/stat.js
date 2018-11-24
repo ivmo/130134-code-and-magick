@@ -29,18 +29,25 @@ var renderTitle = function (ctx, x, y, color) {
 var getMaxElement = function (arr) {
 
   return arr.reduce(function (maxElement, currElement) {
-    if (currElement > maxElement) {
-      maxElement = currElement;
-    }
+    maxElement = currElement > maxElement ? currElement : maxElement;
     return maxElement;
   });
 
 };
 
-var renderChart = function (ctx, x, y, timesCurr, maxTime, playersCurr) {
-  ctx.fillRect(x, y, BAR_WIDTH, (-barHeigth * timesCurr) / maxTime);
-  ctx.fillStyle = '#000';
-  ctx.fillText(playersCurr, x + BAR_WIDTH / 2, y);
+var renderChart = function (ctx, times, maxTime, players) {
+  var barX = CLOUD_X + GAP * 2;
+  var barY = CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth;
+
+  players.forEach(function (playersCurr, i, players) {
+    var opacity = Math.random() * (1 - 0.1) + 0.1;
+    ctx.fillStyle = playersCurr === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(10, 135, 255, ' + opacity + ')';
+
+    ctx.fillRect(barX + (BAR_WIDTH + BAR_GAP) * i, barY, BAR_WIDTH, (-barHeigth * times[i]) / maxTime);
+    ctx.fillStyle = '#000';
+    ctx.fillText(playersCurr, barX + (BAR_WIDTH + BAR_GAP) * i + BAR_WIDTH / 2, barY);
+  });
+
 };
 
 
@@ -51,13 +58,5 @@ window.renderStatistics = function (ctx, players, times) {
 
   var maxTime = getMaxElement(times);
 
-  for (var i = 0; i < players.length; i++) {
-
-    var opacity = Math.random() * (1 - 0.1) + 0.1;
-    ctx.fillStyle = players[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(10, 135, 255, ' + opacity + ')';
-
-    var barX = CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_GAP) * i;
-    var barY = CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth;
-    renderChart(ctx, barX, barY, times[i], maxTime, players[i]);
-  }
+  renderChart(ctx, times, maxTime, players);
 };
