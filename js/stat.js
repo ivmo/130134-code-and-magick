@@ -39,7 +39,7 @@ var renderChart = function (ctx, times, maxTime, players) {
   var barX = CLOUD_X + GAP * 2;
   var barY = CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth;
 
-  players.forEach(function (playersCurr, i, players) {
+  players.forEach(function (playersCurr, i) {
     var opacity = Math.random() * (1 - 0.1) + 0.1;
     ctx.fillStyle = playersCurr === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(10, 135, 255, ' + opacity + ')';
 
