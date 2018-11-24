@@ -29,13 +29,13 @@ var renderTitle = function (ctx, x, y, color) {
 var getMaxElement = function (arr) {
 
   return arr.reduce(function (maxElement, currElement) {
-    maxElement = currElement > maxElement ? currElement : maxElement;
-    return maxElement;
+    return currElement > maxElement ? currElement : maxElement;
   });
 
 };
 
-var renderChart = function (ctx, times, maxTime, players) {
+var renderChart = function (ctx, times, players) {
+  var maxTime = getMaxElement(times);
   var barX = CLOUD_X + GAP * 2;
   var barY = CLOUD_Y + FONT_GAP * 2 + GAP * 2 + barHeigth;
 
@@ -55,8 +55,5 @@ window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
   renderTitle(ctx, CLOUD_X + CLOUD_WIDTH / 2 + GAP, CLOUD_Y + GAP, '#000000');
-
-  var maxTime = getMaxElement(times);
-
-  renderChart(ctx, times, maxTime, players);
+  renderChart(ctx, times, players);
 };
