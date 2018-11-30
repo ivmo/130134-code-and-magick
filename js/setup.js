@@ -60,14 +60,10 @@ var createData = function (name, surname, warlockCoatColor, warlockEyesColor) {
   return warlocks;
 };
 
-var warloksList = createData(NAMES, SURNAMES, coatColor, eyesColor);
-
-var similarListElement = userDialog.querySelector('.setup-similar-list');
-
-
-var warlockTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+var warlocksList = createData(NAMES, SURNAMES, coatColor, eyesColor);
 
 var renderWarlock = function (warlock) {
+  var warlockTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var warlockElement = warlockTemplate.cloneNode(true);
 
   warlockElement.querySelector('.wizard-eyes').style.fill = warlock.eyesColor;
@@ -77,11 +73,15 @@ var renderWarlock = function (warlock) {
   return warlockElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < warloksList.length; i++) {
-  fragment.appendChild(renderWarlock(warloksList[i]));
-}
+var putWarlocks = function () {
+  var similarListElement = userDialog.querySelector('.setup-similar-list');
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < warlocksList.length; i++) {
+    fragment.appendChild(renderWarlock(warlocksList[i]));
+  }
+  similarListElement.appendChild(fragment);
+};
 
-similarListElement.appendChild(fragment);
+putWarlocks();
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
