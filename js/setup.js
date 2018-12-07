@@ -1,7 +1,14 @@
 'use strict';
 
+var ESC = 27;
+var ENTER = 13;
+
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+var openBtn = document.querySelector('.setup-open');
+var setupClose = userDialog.querySelector('.setup-close');
+var openIcon = openBtn.querySelector('.setup-open-icon');
+var focus = false;
+
 
 var NAMES = [
   'Иван',
@@ -85,3 +92,48 @@ var putWarlocks = function () {
 putWarlocks();
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+
+var inputFocus = function (evt) {
+  if (evt.target.classList.contains('setup-user-name')) {
+    focus = true;
+  }
+  return focus;
+};
+
+var inputBlur = function (evt) {
+  if (evt.target.classList.contains('setup-user-name')) {
+    focus = false;
+  }
+  return focus;
+};
+
+var openPopup = function () {
+  userDialog.classList.remove('hidden');
+  userDialog.addEventListener('focus', inputFocus, true);
+  userDialog.addEventListener('blur', inputBlur, true);
+  userDialog.addEventListener('click', closePopup);
+  userDialog.addEventListener('keydown', closePopup);
+  document.addEventListener('keydown', closePopup);
+};
+
+
+var closePopup = function (evt) {
+  if (evt.target.classList.contains('setup-close') || (evt.keyCode === ESC && focus === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
+    userDialog.classList.add('hidden');
+    userDialog.removeEventListener('focus', inputFocus, true);
+    userDialog.removeEventListener('blur', inputBlur, true);
+    setupClose.removeEventListener('click', closePopup);
+    document.removeEventListener('keydown', closePopup);
+  }
+};
+
+openBtn.addEventListener('click', function () {
+  openPopup();
+});
+
+openIcon.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER) {
+    openPopup();
+  }
+});
