@@ -154,14 +154,13 @@ var fireball = userDialog.querySelector('.setup-fireball-wrap');
 var inputCoatColor = userDialog.querySelector('input[name="coat-color"]');
 var inputEyesColor = userDialog.querySelector('input[name="eyes-color"]');
 var inputFireColor = userDialog.querySelector('input[name="fireball-color"]');
-console.log(inputFireColor);
 
 var getNextValue = function (featuresArr, feature, styleColor) {
   var currColor = feature.style[styleColor];
   var nextValue = 1;
-  featuresArr.forEach(function(item, i) {
+  featuresArr.forEach(function (item, i) {
     if (item === currColor) {
-      nextValue = i+1;
+      nextValue = i + 1;
     }
   });
   if (nextValue >= featuresArr.length) {
@@ -197,7 +196,6 @@ var warlockClickHandler = function (wizard) {
 
 var fireballClickHandler = function (fire) {
   fire.addEventListener('click', changeFireColor);
-  console.log(inputFireColor);
 };
 
 warlockClickHandler(warlock);
