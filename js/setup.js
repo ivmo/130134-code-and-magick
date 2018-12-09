@@ -121,18 +121,30 @@ var openPopup = function () {
   userDialog.addEventListener('focus', inputFocus, true);
   userDialog.addEventListener('blur', inputBlur, true);
   userDialog.addEventListener('click', closePopup);
-  userDialog.addEventListener('keydown', closePopup);
-  document.addEventListener('keydown', closePopup);
+  userDialog.addEventListener('keydown', closePopupKeydown);
+  document.addEventListener('keydown', closePopupKeydown);
 };
 
 
 var closePopup = function (evt) {
-  if (evt.target.classList.contains('setup-close') || (evt.keyCode === ESC && focus === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
+  if (evt.target.classList.contains('setup-close')) {
     userDialog.classList.add('hidden');
     userDialog.removeEventListener('focus', inputFocus, true);
     userDialog.removeEventListener('blur', inputBlur, true);
-    setupClose.removeEventListener('click', closePopup);
-    document.removeEventListener('keydown', closePopup);
+    userDialog.removeEventListener('click', closePopup);
+    userDialog.removeEventListener('keydown', closePopupKeydown);
+    document.removeEventListener('keydown', closePopupKeydown);
+  }
+};
+
+var closePopupKeydown = function (evt) {
+  if ((evt.keyCode === ESC && focus === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
+    userDialog.classList.add('hidden');
+    userDialog.removeEventListener('focus', inputFocus, true);
+    userDialog.removeEventListener('blur', inputBlur, true);
+    userDialog.removeEventListener('click', closePopup);
+    userDialog.removeEventListener('keydown', closePopupKeydown);
+    document.removeEventListener('keydown', closePopupKeydown);
   }
 };
 
