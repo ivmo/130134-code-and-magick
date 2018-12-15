@@ -5,9 +5,8 @@ var ENTER = 13;
 
 var userDialog = document.querySelector('.setup');
 var openBtn = document.querySelector('.setup-open');
-var setupClose = userDialog.querySelector('.setup-close');
 var openIcon = openBtn.querySelector('.setup-open-icon');
-var focus = false;
+var focusState = false;
 
 
 var NAMES = [
@@ -104,16 +103,16 @@ userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
 var inputFocus = function (evt) {
   if (evt.target.classList.contains('setup-user-name')) {
-    focus = true;
+    focusState = true;
   }
-  return focus;
+  return focusState;
 };
 
 var inputBlur = function (evt) {
   if (evt.target.classList.contains('setup-user-name')) {
-    focus = false;
+    focusState = false;
   }
-  return focus;
+  return focusState;
 };
 
 var openPopup = function () {
@@ -125,6 +124,7 @@ var openPopup = function () {
   document.addEventListener('keydown', closePopupKeydown);
 };
 
+var setupDialogElement = document.querySelector('.setup');
 
 var closePopup = function (evt) {
   if (evt.target.classList.contains('setup-close')) {
@@ -134,17 +134,21 @@ var closePopup = function (evt) {
     userDialog.removeEventListener('click', closePopup);
     userDialog.removeEventListener('keydown', closePopupKeydown);
     document.removeEventListener('keydown', closePopupKeydown);
+    setupDialogElement.style.top = '';
+    setupDialogElement.style.left = '';
   }
 };
 
 var closePopupKeydown = function (evt) {
-  if ((evt.keyCode === ESC && focus === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
+  if ((evt.keyCode === ESC && focusState === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
     userDialog.classList.add('hidden');
     userDialog.removeEventListener('focus', inputFocus, true);
     userDialog.removeEventListener('blur', inputBlur, true);
     userDialog.removeEventListener('click', closePopup);
     userDialog.removeEventListener('keydown', closePopupKeydown);
     document.removeEventListener('keydown', closePopupKeydown);
+    setupDialogElement.style.top = '';
+    setupDialogElement.style.left = '';
   }
 };
 
