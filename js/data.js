@@ -71,16 +71,23 @@
 
   // var warlocksList = createData(NAMES, SURNAMES, coatColor, eyesColor);
 
-  var onLoad = function (warlocks) {
-    console.log(warlocks);
-    return warlocks;
-  }
 
-  var onError = function () {
 
-  };
+    // var warlocksList = window.backend.load(onLoad, onError);
 
-    var warlocksList = window.backend.load(onLoad, onError);
+    // console.log(warlocksList);
+
+    var onLoad = function (warlocks) {
+      console.log(warlocks);
+      return warlocks;
+      window.createWarlocks.putWarlocks(warlocks);
+    };
+
+    var onError = function () {
+
+    };
+
+    window.backend.load(onLoad, onError);
 
   window.data = {
     ESC: ESC,
@@ -88,7 +95,7 @@
     coatColor: coatColor,
     eyesColor: eyesColor,
     fireballColor: fireballColor,
-    userDialog: userDialog,
-    warlocksList: warlocksList
+    userDialog: userDialog
+    // warlocksList: warlocksList
   };
 })();

@@ -12,16 +12,19 @@
     return warlockElement;
   };
 
-  var putWarlocks = function () {
+  var putWarlocks = function (data) {
     var similarListElement = window.data.userDialog.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.data.warlocksList.length; i++) {
-      fragment.appendChild(renderWarlock(window.data.warlocksList[i]));
+    for (var i = 0; i < data.length; i++) {
+      fragment.appendChild(renderWarlock(data[i]));
     }
     similarListElement.appendChild(fragment);
   };
 
-  putWarlocks();
+
+  window.createWarlocks = {
+    putWarlocks: putWarlocks
+  };
 
   window.data.userDialog.querySelector('.setup-similar').classList.remove('hidden');
 })();

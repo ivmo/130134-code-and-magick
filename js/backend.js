@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+
+
   var load = function (onLoad, onError) {
     var url = 'https://js.dump.academy/code-and-magick/data';
     var xhr = new XMLHttpRequest();
@@ -23,8 +25,11 @@
 
   };
 
+
+
   window.backend = {
     load: load,
     save: save
   }
+
 })();
