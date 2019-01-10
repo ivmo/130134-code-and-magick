@@ -51,25 +51,36 @@
 
   var userDialog = document.querySelector('.setup');
 
-  var getFeatureValue = function (featuresArr) {
-    var randomValue = Math.floor(Math.random() * featuresArr.length);
-    return featuresArr[randomValue];
-  };
+  // var getFeatureValue = function (featuresArr) {
+  //   var randomValue = Math.floor(Math.random() * featuresArr.length);
+  //   return featuresArr[randomValue];
+  // };
+  //
+  // var createData = function (name, surname, warlockCoatColor, warlockEyesColor) {
+  //   var warlocks = [];
+  //   for (var i = 0; i < 4; i++) {
+  //     var warlock = {
+  //       name: getFeatureValue(name) + ' ' + getFeatureValue(surname),
+  //       coatColor: getFeatureValue(warlockCoatColor),
+  //       eyesColor: getFeatureValue(warlockEyesColor)
+  //     };
+  //     warlocks.push(warlock);
+  //   }
+  //   return warlocks;
+  // };
 
-  var createData = function (name, surname, warlockCoatColor, warlockEyesColor) {
-    var warlocks = [];
-    for (var i = 0; i < 4; i++) {
-      var warlock = {
-        name: getFeatureValue(name) + ' ' + getFeatureValue(surname),
-        coatColor: getFeatureValue(warlockCoatColor),
-        eyesColor: getFeatureValue(warlockEyesColor)
-      };
-      warlocks.push(warlock);
-    }
+  // var warlocksList = createData(NAMES, SURNAMES, coatColor, eyesColor);
+
+  var onLoad = function (warlocks) {
+    console.log(warlocks);
     return warlocks;
+  }
+
+  var onError = function () {
+
   };
 
-  var warlocksList = createData(NAMES, SURNAMES, coatColor, eyesColor);
+    var warlocksList = window.backend.load(onLoad, onError);
 
   window.data = {
     ESC: ESC,
