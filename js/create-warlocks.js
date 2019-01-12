@@ -24,7 +24,6 @@
 
   var putWarlocks = function (data) {
     var warlocksList = getRandomWarlocks(data);
-    console.log(warlocksList);
     var similarListElement = window.data.userDialog.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
 

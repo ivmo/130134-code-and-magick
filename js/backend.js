@@ -29,7 +29,6 @@
   };
 
 
-
   var save = function (data, onLoad, onError) {
     var url = 'https://js.dump.academy/code-and-magick';
     var xhr = new XMLHttpRequest();
@@ -56,8 +55,6 @@
     xhr.open('POST', url);
     xhr.send(data);
   };
-
-
 
 
   window.backend = {
