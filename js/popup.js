@@ -44,7 +44,7 @@
   };
 
   var closePopupKeydown = function (evt) {
-    if ((evt.keyCode === ESC && focusState === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === ENTER)) {
+    if ((evt.keyCode === window.data.ESC && focusState === false) || (evt.target.classList.contains('setup-close') && evt.keyCode === window.data.ENTER)) {
       window.data.userDialog.classList.add('hidden');
       window.data.userDialog.removeEventListener('focus', inputFocus, true);
       window.data.userDialog.removeEventListener('blur', inputBlur, true);
@@ -61,7 +61,7 @@
   });
 
   openIcon.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER) {
+    if (evt.keyCode === window.data.ENTER) {
       openPopup();
     }
   });
