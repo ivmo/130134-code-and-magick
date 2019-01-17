@@ -32,9 +32,20 @@
 
   var warlockList = [];
 
+  var filterFun;
+
   var onLoad = function (warlocks) {
-    warlockList = warlocks;
-    window.warlockCustom.updateWarlocks();
+    window.data.warlockList = warlocks;
+    window.warlockCustom.updateWarlocks(warlocks);
+    filterFun = function (target) {
+      if (target.classList.contains('wizard-coat')) {
+        changeCoatColor(warlocks);
+      } else if (target.classList.contains('wizard-eyes')) {
+        changeEyesColor(warlocks);
+      } else if (target.classList.contains('setup-fireball-wrap')) {
+        changeFireColor(warlocks);
+      }
+    };
   };
 
   var onError = function (errorMessage) {
@@ -81,6 +92,6 @@
     eyesColor: eyesColor,
     fireballColor: fireballColor,
     userDialog: userDialog,
-    warlockList: warlockList
+    // warlockList: warlockList
   };
 })();

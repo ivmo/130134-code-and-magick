@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var warlockInner = window.data.userDialog.querySelector('.setup-player');
   var warlock = window.data.userDialog.querySelector('.setup-wizard');
   var coat = warlock.querySelector('.wizard-coat');
   var eyes = warlock.querySelector('.wizard-eyes');
@@ -26,9 +27,9 @@
   var eyesColor;
   var fireballColor;
 
-  var updateWarlocks = function () {
+  var updateWarlocks = function (data) {
 
-    window.createWarlocks.putWarlocks(window.data.warlockList);
+    window.createWarlocks.putWarlocks(data);
   }
 
   var getRandomElement = function (array) {
@@ -37,46 +38,50 @@
   };
 
 
-  var changeCoatColor = function (evt) {
-    if (evt.target.classList.contains('wizard-coat')) {
+  var changeCoatColor = function (data) {
       var newColor = getRandomElement(window.data.coatColor);
       coat.style.fill = newColor;
       inputCoatColor.value = newColor;
       coatColor = newColor;
-      updateWarlocks();
-    }
+      updateWarlocks(data);
   };
 
-  var changeEyesColor = function (evt) {
-    if (evt.target.classList.contains('wizard-eyes')) {
+  var changeEyesColor = function (data) {
       var newColor = getRandomElement(window.data.eyesColor);
       eyes.style.fill = newColor;
       inputEyesColor.value = newColor;
       eyesColor = newColor;
-      updateWarlocks();
-    }
+      updateWarlocks(data);
+
   };
 
-  var changeFireColor = function () {
+  var changeFireColor = function (data) {
     var newColor = getRandomElement(window.data.fireballColor);
     fireball.style.background = newColor;
     inputFireColor.value = newColor;
     fireballColor = newColor;
-    updateWarlocks();
+    updateWarlocks(data);
   };
 
-  var warlockClickHandler = function (wizard) {
-    wizard.addEventListener('click', changeCoatColor);
-    wizard.addEventListener('click', changeEyesColor);
+  var warlockClickHandler = function (evt) {
+    filterFun(evt.target);
+
   };
 
-  var fireballClickHandler = function (fire) {
-    fire.addEventListener('click', changeFireColor);
-  };
+  warlockInner.addEventListener('click', warlockClickHandler);
 
-  warlockClickHandler(warlock);
+  // var warlockClickHandler = function (wizard) {
+  //   wizard.addEventListener('click', changeCoatColor);
+  //   wizard.addEventListener('click', changeEyesColor);
+  // };
 
-  fireballClickHandler(fireball);
+  // var fireballClickHandler = function (fire) {
+  //   fire.addEventListener('click', changeFireColor);
+  // };
+
+  // warlockClickHandler(warlockInner);
+
+  // fireballClickHandler(fireball);
 
   window.warlockCustom = {
     updateWarlocks: updateWarlocks
