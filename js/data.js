@@ -30,8 +30,11 @@
 
   var userDialog = document.querySelector('.setup');
 
+  var warlockList = [];
+
   var onLoad = function (warlocks) {
-    window.createWarlocks.putWarlocks(warlocks);
+    warlockList = warlocks;
+    window.warlockCustom.updateWarlocks();
   };
 
   var onError = function (errorMessage) {
@@ -77,6 +80,7 @@
     coatColor: coatColor,
     eyesColor: eyesColor,
     fireballColor: fireballColor,
-    userDialog: userDialog
+    userDialog: userDialog,
+    warlockList: warlockList
   };
 })();
