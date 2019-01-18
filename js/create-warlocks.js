@@ -18,6 +18,7 @@
     var similarListElement = window.data.userDialog.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
 
+    similarListElement.innerHTML = '';
     for (var i = 0; i < 4; i++) {
       fragment.appendChild(renderWarlock(data[i]));
     }
