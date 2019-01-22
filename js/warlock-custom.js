@@ -11,7 +11,6 @@
 
   var coatColor;
   var eyesColor;
-  var fireballColor;
 
   var getRank = function (wizard) {
     var rank = 0;
@@ -72,13 +71,10 @@
     window.debounce(updateWarlocksRes);
   };
 
-  var changeFireColor = function (data) {
+  var changeFireColor = function () {
     var newColor = getRandomElement(window.data.fireballColor);
     fireball.style.background = newColor;
     inputFireColor.value = newColor;
-    fireballColor = newColor;
-    var updateWarlocksRes = updateWarlocks(data);
-    window.debounce(updateWarlocksRes);
   };
 
   var warlockClickHandler = function (evt) {

@@ -14,7 +14,6 @@
 
 
   var putWarlocks = function (data) {
-    // var warlocksList = data;
     var similarListElement = window.data.userDialog.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
 
