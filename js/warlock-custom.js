@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var warlockInner = window.data.userDialog.querySelector('.setup-player');
   var warlock = window.data.userDialog.querySelector('.setup-wizard');
   var coat = warlock.querySelector('.wizard-coat');
   var eyes = warlock.querySelector('.wizard-eyes');
@@ -8,51 +9,83 @@
   var inputEyesColor = window.data.userDialog.querySelector('input[name="eyes-color"]');
   var inputFireColor = window.data.userDialog.querySelector('input[name="fireball-color"]');
 
-  var getNextValue = function (featuresArr, feature, styleColor) {
-    var currColor = feature.style[styleColor];
-    var nextValue = 1;
-    featuresArr.forEach(function (item, i) {
-      if (item === currColor) {
-        nextValue = i + 1;
+  var coatColor;
+  var eyesColor;
+
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  var namesComparator = function (left, right) {
+    return left - right;
+  };
+
+  var updateWarlocks = function (data) {
+    window.createWarlocks.putWarlocks(data.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
       }
-    });
-    if (nextValue >= featuresArr.length) {
-      nextValue = 0;
-    }
-    return featuresArr[nextValue];
+      return rankDiff;
+    }));
+
+  };
+
+  var getRandomElement = function (array) {
+    var randomElementIndex = Math.floor(Math.random() * array.length);
+    return array[randomElementIndex];
   };
 
 
-  var changeCoatColor = function (evt) {
-    if (evt.target.classList.contains('wizard-coat')) {
-      coat.style.fill = getNextValue(window.data.coatColor, coat, 'fill');
-      inputCoatColor.value = coat.style.fill;
-    }
+  var changeCoatColor = function (data) {
+    var newColor = getRandomElement(window.data.coatColor);
+    coat.style.fill = newColor;
+    inputCoatColor.value = newColor;
+    coatColor = newColor;
+    var updateWarlocksRes = updateWarlocks(data);
+    window.debounce(updateWarlocksRes);
+
   };
 
-  var changeEyesColor = function (evt) {
-    if (evt.target.classList.contains('wizard-eyes')) {
-      eyes.style.fill = getNextValue(window.data.eyesColor, eyes, 'fill');
-      inputEyesColor.value = eyes.style.fill;
-    }
+  var changeEyesColor = function (data) {
+    var newColor = getRandomElement(window.data.eyesColor);
+    eyes.style.fill = newColor;
+    inputEyesColor.value = newColor;
+    eyesColor = newColor;
+    var updateWarlocksRes = updateWarlocks(data);
+    window.debounce(updateWarlocksRes);
   };
 
   var changeFireColor = function () {
-    fireball.style.background = getNextValue(window.data.fireballColor, fireball, 'background');
-    inputFireColor.value = fireball.style.background;
+    var newColor = getRandomElement(window.data.fireballColor);
+    fireball.style.background = newColor;
+    inputFireColor.value = newColor;
   };
 
-  var warlockClickHandler = function (wizard) {
-    wizard.addEventListener('click', changeCoatColor);
-    wizard.addEventListener('click', changeEyesColor);
+  var warlockClickHandler = function (evt) {
+    if (evt.target.classList.contains('wizard-coat')) {
+      changeCoatColor(window.dataLoad.warlockList);
+    } else if (evt.target.classList.contains('wizard-eyes')) {
+      changeEyesColor(window.dataLoad.warlockList);
+    } else if (evt.target.classList.contains('setup-fireball')) {
+      changeFireColor(window.dataLoad.warlockList);
+    }
   };
 
-  var fireballClickHandler = function (fire) {
-    fire.addEventListener('click', changeFireColor);
+  warlockInner.addEventListener('click', warlockClickHandler);
+
+
+  window.warlockCustom = {
+    updateWarlocks: updateWarlocks
   };
-
-  warlockClickHandler(warlock);
-
-  fireballClickHandler(fireball);
 
 })();
